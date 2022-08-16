@@ -100,6 +100,7 @@ https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
 links
 https://cloud.google.com/container-registry/docs/pushing-and-pulling
 https://artifacthub.io/packages/helm/jenkinsci/jenkins
+https://cloud.google.com/architecture/jenkins-on-kubernetes-engine-tutorial
 
 
 ## deploy nexus using helm
