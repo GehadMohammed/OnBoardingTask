@@ -109,3 +109,8 @@ resource "google_container_node_pool" "app_cluster_node_pool" {
 }
 
 
+##links
+##https://thoeny.dev/create-a-private-gcp-kubernetes-cluster-using-terraform
+## https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#req_res_lim
+##https://cloud.google.com/kubernetes-engine/docs/concepts/alias-ips
+## https://cloud.google.com/sdk/gcloud/reference/auth/activate-service-account
