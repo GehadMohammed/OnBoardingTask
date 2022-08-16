@@ -1,5 +1,5 @@
 
-resource "google_compute_instance" "gehad-test-vm" {
+resource "google_compute_instance" "test-vm" {
   name         = var.VM_Machine_name
   machine_type = var.VM_Machine_type
   zone         = var.VM_Zone

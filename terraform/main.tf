@@ -33,7 +33,7 @@ module "compute_engine" {
   VM_Machine_type            = var.VM_Machine_type
   VM_OS_image                = var.VM_OS_image
   VM_Zone                    = var.VM_Zone
-  VM_network                 = "${module.network.out_gehad-vpc_name}"
+  VM_network                 = "${module.network.out_vpc_name}"
   VM_subnetwork              = "${module.network.out_subnet_id}"
   service_account_email      = "${module.service-account-vm.service_account_email}"
 
@@ -70,8 +70,9 @@ module "gcr" {
   source = "./kubernetes_cluster"
 
   Cluster_name               = var.Cluster_name
-  cluster_region             = var.cluster_region
-  gehad-vpc                        = "${module.network.out_gehad-vpc_name}"
+  master_zone                = var.master_zone 
+  worker_node_zone           = var.worker_node_zone
+  gehad-vpc                  = "${module.network.out_vpc_name}"
   subnet                     = "${module.network.out_subnet_name}"
   master_ipv4_cidr_block     = var.master_ipv4_cidr_block
   authorized_network_cidr    = var.subnet_cidr

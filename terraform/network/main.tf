@@ -1,13 +1,13 @@
 
-resource "google_compute_network" "gehad-vpc" {
-  name                    = var.gehad-vpc_name
+resource "google_compute_network" "vpc" {
+  name                    = var.vpc_name
   auto_create_subnetworks = false
   mtu                     = 1460
 }
 
 resource "google_compute_firewall" "allow-ssh" {
   name    = "allow-ssh"
-  network = google_compute_network.gehad-vpc.name
+  network = google_compute_network.vpc.name
 
   allow {
     protocol = "tcp"
@@ -16,18 +16,18 @@ resource "google_compute_firewall" "allow-ssh" {
   source_ranges = ["35.235.240.0/20"]
 }
 
-resource "google_compute_subnetwork" "gehad_subnet" {
+resource "google_compute_subnetwork" "subnet" {
   name          = var.subnet_name
   ip_cidr_range = var.subnet_cidr
-  network       = google_compute_network.gehad-vpc.id
+  network       = google_compute_network.vpc.id
   private_ip_google_access = true
 }
 
 
 resource "google_compute_router" "router" {
   name    = "gehad-router"
-  region  = google_compute_subnetwork.gehad_subnet.region
-  network = google_compute_network.gehad-vpc.id
+  region  = google_compute_subnetwork.subnet.region
+  network = google_compute_network.vpc.id
 
   bgp {
     asn = 64514

@@ -11,7 +11,7 @@
 # you can manage the cluster with tools like kubectl that connect to the private endpoint as well.
 # Any VM that uses the same subnet that your private cluster uses can also access the private endpoint.
 
-resource "google_container_cluster" "gehad-gke" {
+resource "google_container_cluster" "gke" {
   name= var.Cluster_name
   #  The location (region or zone) in which the cluster master will be created,
   # as well as the default node location. If you specify a zone (such as us-central1-a), 
@@ -19,7 +19,7 @@ resource "google_container_cluster" "gehad-gke" {
   # If you specify a region (such as us-west1), 
   # the cluster will be a regional cluster with multiple masters spread across zones in the region,
   #  and with default node locations in those zones as well
-   location     = "${var.cluster_region}-b"
+   location     = "${var.master_zone}"
  
 
   # We can't create a cluster with no node pool defined, but we want to only use
@@ -29,7 +29,7 @@ resource "google_container_cluster" "gehad-gke" {
   # must create at least one y defult node then delete it
   initial_node_count       = 1
   # worker node location
-  node_locations           =["${var.cluster_region}-c"]
+  node_locations           =["${var.worker_node_zone}"]
 
   # gehad-vpc subnet cluster will created 
   network = var.gehad-vpc
@@ -72,10 +72,10 @@ ip_allocation_policy {
 }
 
 resource "google_container_node_pool" "app_cluster_node_pool" {
-  name           = "${google_container_cluster.gehad-gke.name}-node-pool"
-  location       = google_container_cluster.gehad-gke.location
+  name           = "${google_container_cluster.gke.name}-node-pool"
+  location       = google_container_cluster.gke.location
   #node_locations = ["${var.cluster_region}-b"]
-  cluster        = google_container_cluster.gehad-gke.name
+  cluster        = google_container_cluster.gke.name
   #it's inform cluster create 2 worker node in each zone
   node_count     = var.Number_of_nodes_per_zone
 
@@ -103,7 +103,7 @@ resource "google_container_node_pool" "app_cluster_node_pool" {
   }
 
   depends_on = [
-    google_container_cluster.gehad-gke
+    google_container_cluster.gke
   ]
  
 }

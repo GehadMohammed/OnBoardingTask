@@ -1,4 +1,4 @@
-resource "google_storage_bucket" "gehad-gsbucket" {
+resource "google_storage_bucket" "gsbucket" {
   for_each      = toset(var.gsbucket_name)
   name          = each.key
   location      = "EU"
@@ -14,6 +14,6 @@ resource "google_storage_bucket_iam_member" "binding" {
   role          = var.bucketserviceAccountRole
   member        = "serviceAccount:${var.serviceAccountemail}"
   depends_on = [
-    google_storage_bucket.gehad-gsbucket
+    google_storage_bucket.gsbucket
   ]
 }

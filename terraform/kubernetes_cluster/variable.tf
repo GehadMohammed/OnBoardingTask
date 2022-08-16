@@ -4,7 +4,11 @@ variable "Cluster_name" {
   
 }
 
-variable "cluster_region" {
+variable "master_zone" {
+  type = string  
+}
+
+variable "worker_node_zone" {
   type = string  
 }
 
