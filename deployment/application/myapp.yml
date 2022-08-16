@@ -1,0 +1,9 @@
+kind: Pod
+metadata:
+  name: myapp
+  labels: 
+     name : myapp
+spec:
+  containers:
+  - name: myapp
+    image: eu.gcr.io/iti-2-358616/myapp

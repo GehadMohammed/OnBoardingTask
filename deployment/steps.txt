@@ -1,0 +1,110 @@
+## depoly our application
+
+1- clone application repo on local machine
+ 
+  git clone https://github.com/GehadMohammed/jenkins_nodejs_example.git
+
+2- build dockerfile
+
+ docker build [OPTIONS] PATH | URL | -
+ -t -> tag (Name and optionally a tag in the 'name:tag' format)
+ . -> scan current dir for file named dockerfile
+ docker build -t eu.gcr.io/iti-2-358616/myapp .
+
+3- push image to gcr
+
+ docker push eu.gcr.io/iti-2-358616/myapp
+
+4- create pod file using image from gcr
+ 
+ vi lb.yml
+ kubectl apply -f app.yml
+
+5- create loadbalancer to access application 
+
+ vi lb.yml
+ kubectl apply lb.yml
+  
+6- to access application
+
+ NAME                    TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)          AGE
+ service/my-service      LoadBalancer   10.104.4.29    35.233.76.176   80:30157/TCP     63s
+
+ ----> hit  LOADBALANCER-EXTERNAL-IP:POR
+
+links
+
+https://github.com/GehadMohammed/jenkins_nodejs_example.git
+https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
+
+
+## deploy jenkins using helm
+
+## infra chart does not have NAT, so you need to push all images to your gcr 
+
+1- pull image from online docker repo -dockerhub-
+  
+ docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+ docker pull jenkins/jenkins
+
+2- tag image 
+ 
+ docker tag image-name image-tag 
+ docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+ docker tag jenkins/jenkins eu.gcr.io/iti-2-358616/jenkins/jenkin
+
+
+3- push image to local repo - container reigstery-
+ 
+ docker push [OPTIONS] NAME[:TAG]
+ docker push eu.gcr.io/iti-2-358616/jenkins/jenkins ##bydefault if you do not include tag it'ill be "latest"
+
+
+4- add jenkins repo
+
+ helm repo add jenkinsci https://charts.jenkins.io/
+ 
+5- pull jenkins chart to cuurent dir 
+
+ helm pull jenkinsci/jenkins
+
+6- jenkins chart pulled as composed file, extract it
+
+ tar xfv jenkins-4.1.16.tgz
+
+7- change some defualt values
+ 
+ image -> image you pushed to gcr
+ service.type -> loadbalncer, need to access it through URL
+ vi jenkins/values.yaml 
+
+8- install helm chart
+ 
+  helm install jenkins jenkins
+
+9- to access it wait for running pod and 
+ 
+  kubectl get all
+
+  NAME                    TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)          AGE
+  service/jenkins         LoadBalancer   10.104.2.81    35.240.28.114   8080:31350/TCP   3m41s
+
+  ----> hit  LOADBALANCER-EXTERNAL-IP:PORT
+  to get jenkins console password run this command
+  kubectl exec --namespace default -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
+
+
+             
+
+ 
+links
+https://cloud.google.com/container-registry/docs/pushing-and-pulling
+https://artifacthub.io/packages/helm/jenkinsci/jenkins
+
+
+## deploy nexus using helm
+
+-- reapet steps for depoly jenkins using nexus image and chart
+
+links
+https://artifacthub.io/packages/helm/sonatype/nexus-repository-manager
