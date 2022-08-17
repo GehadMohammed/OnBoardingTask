@@ -128,3 +128,5 @@ to inform docker push from this repo not defualt repo (dockerhub)
 2- change value of variable in value.yml file
 namespaceOverride: "  " ->> preferred way
 3shan momkn ykon binstall app by3tmd 3ala ano y install jenkins masaln dependencies using helm howa kda hayro7 install l app w l dependeces gowa l namespace bta3t l app
+
+## lama bykon workernode resource msh kfaya 3shan a2wm pod bydeny status bta3t l pod pending w msh ha2dr a3ml troubleshoot 3'er 3n tare2 "kubectl describe podname" , msh hnf3 a3ml "kubectl logs " 3shan mafe4 pod 2amt aslan 3shan ytsglha logs
