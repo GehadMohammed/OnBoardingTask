@@ -109,3 +109,22 @@ https://cloud.google.com/architecture/jenkins-on-kubernetes-engine-tutorial
 
 links
 https://artifacthub.io/packages/helm/sonatype/nexus-repository-manager
+
+
+##review notes
+
+-preferred to create application as deployment not pod
+-naming naming naming 
+
+-gcloud compnent install -> use to download without nat in chart
+https://cloud.google.com/sdk/gcloud/reference/components/install
+
+- why need to tag image?
+repo-URL/location/artifact:tag
+to inform docker push from this repo not defualt repo (dockerhub)
+
+- by defualy helm will install chart in defult namespace to change it :
+1- helm install chart-name -n namespace
+2- change value of variable in value.yml file
+namespaceOverride: "  " ->> preferred way
+3shan momkn ykon binstall app by3tmd 3ala ano y install jenkins masaln dependencies using helm howa kda hayro7 install l app w l dependeces gowa l namespace bta3t l app
