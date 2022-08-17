@@ -118,6 +118,8 @@ https://artifacthub.io/packages/helm/sonatype/nexus-repository-manager
 
 -gcloud compnent install -> use to download without nat in chart
 https://cloud.google.com/sdk/gcloud/reference/components/install
+https://cloud.google.com/sdk/gcloud/reference/components
+gcloud components install kubectl
 
 - why need to tag image?
 repo-URL/location/artifact:tag
